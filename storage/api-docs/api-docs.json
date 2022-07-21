@@ -1,0 +1,1182 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "kids-r-us",
+        "description": "E-commerce web api",
+        "contact": {
+            "name": "lleraabi@gmail.com",
+            "email": "lleraabi@gmail.com"
+        },
+        "version": "0.0.1"
+    },
+    "paths": {
+        "/api/login": {
+            "post": {
+                "summary": "Inicia sessión",
+                "description": "Inicia sesión con las credenciales de una cuenta existente.",
+                "operationId": "0ef3370a7a95f3d72ede1b4714816612",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "email": "juan@mail.com",
+                                    "password": "abcd1234"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "oneOf": [
+                                        {
+                                            "$ref": "#components/schemas/LoginResponse"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/categories": {
+            "get": {
+                "summary": "Obtiene todas las categorías.",
+                "description": "Obtiene todas las categorías",
+                "operationId": "3f5817a34833d0a1f4af4548dd3aeaba",
+                "responses": {
+                    "200": {
+                        "description": "Una lista con todas las categorías"
+                    }
+                }
+            },
+            "post": {
+                "summary": "Crea una nueva categoría.",
+                "description": "Crea una nueva categoría.",
+                "operationId": "71fcad552bb0eaba9fb191fd8d8dcab0",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#components/schemas/Category"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "oneOf": [
+                                        {
+                                            "$ref": "#components/schemas/Category"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/categories/{category}": {
+            "get": {
+                "summary": "Obtiene una categoría por el id.",
+                "description": "Obtiene una categoría por el id.",
+                "operationId": "e92579e78391b6199e78c2a091dbea0a",
+                "parameters": [
+                    {
+                        "name": "category",
+                        "in": "path",
+                        "description": "Id de la categoría",
+                        "required": true,
+                        "allowEmptyValue": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "oneOf": [
+                                        {
+                                            "$ref": "#components/schemas/Category"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "summary": "Actualiza una categoría.",
+                "description": "Actualiza una categoría.",
+                "operationId": "02aa39951e67916277e28086f85909c8",
+                "parameters": [
+                    {
+                        "name": "category",
+                        "in": "path",
+                        "description": "Id de la categoría",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#components/schemas/Category"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Elimina una categoría",
+                "description": "Elimina una categoría. Tenga en cuenta que si esta categoría tiene relaciones con\n     *                  algún producto no se podrá eliminar.",
+                "operationId": "d9ecd5c4a74c4d75339251863eedc08c",
+                "parameters": [
+                    {
+                        "name": "category",
+                        "in": "path",
+                        "description": "Id de la categoría",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    }
+                }
+            }
+        },
+        "/api/password-update": {
+            "post": {
+                "summary": "Endpoint para actualizar la contraseña.",
+                "description": "Endpoint para actualizar la contraseña del usuario autenticado.",
+                "operationId": "60dbe4761116a6359c6a81131a16254f",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "current_password": {
+                                        "description": "Contraseña actual.",
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "description": "Nueva contraseña.",
+                                        "type": "string"
+                                    },
+                                    "password_confirmation": {
+                                        "description": "Confirmación de la nueva contraseña.",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    }
+                }
+            }
+        },
+        "/api/products": {
+            "get": {
+                "summary": "Obtiene los productos.",
+                "description": "Obtiene los productos por páginas de 10 elementos",
+                "operationId": "1bfaa78d1c2c3848ab8165c5dadcad3e",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#components/schemas/ProductPaginatorSchema"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Crea un nuevo producto",
+                "description": "Crea un nuevo producto. El esquema de la petición en igual al del producto excepto por\n     *                  category_name que es remplazado por category.",
+                "operationId": "e8185e307706e2cd84bbcf5171e2f09d",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#components/schemas/Product"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#components/schemas/Product"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/products/out-stock": {
+            "get": {
+                "summary": "Obtiene los productos agotados (out of stock)",
+                "description": "Obtiene los productos agotados (out of stock)",
+                "operationId": "584f23cb500bda625d210380c11d93a4",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#components/schemas/Product"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/products/{product}": {
+            "get": {
+                "summary": "Obtiene un producto",
+                "description": "Obtiene un producto por el id",
+                "operationId": "05f6ffcb49f47b4f4fc1a1c21ed60011",
+                "parameters": [
+                    {
+                        "name": "product",
+                        "in": "path",
+                        "required": true,
+                        "allowEmptyValue": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#components/schemas/Product"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "summary": "Actualiza los datos de un producto",
+                "description": "Actualiza los datos de un producto. La actualización puede ser parcial o total.",
+                "operationId": "c474d1318e5b8c3de1f4d52b6053111f",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#components/schemas/Product"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Elimina un producto",
+                "description": "Elimina un producto por el id",
+                "operationId": "1a0a353d0842ff4f9347bb66ec53e3ea",
+                "parameters": [
+                    {
+                        "name": "product",
+                        "in": "path",
+                        "required": true,
+                        "allowEmptyValue": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    }
+                }
+            }
+        },
+        "/api/products/photo/{product}": {
+            "post": {
+                "summary": "Guarda una nueva foto de un producto",
+                "description": "Guarda una nueva foto de un producto",
+                "operationId": "f308b89f32d3422c32f1a14ec4abac53",
+                "parameters": [
+                    {
+                        "name": "product",
+                        "in": "path",
+                        "description": "Id del producto",
+                        "required": true,
+                        "allowEmptyValue": false
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "photo": {
+                                        "description": "Foto a subir",
+                                        "type": "object"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    }
+                }
+            }
+        },
+        "/api/products/photo/{photo}": {
+            "delete": {
+                "summary": "Elimina una foto de un producto",
+                "description": "Elimina una foto de un producto",
+                "operationId": "527172519995070865a72289739a27ea",
+                "parameters": [
+                    {
+                        "name": "photo",
+                        "in": "path",
+                        "description": "Id de la foto a eliminar",
+                        "required": true,
+                        "allowEmptyValue": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    }
+                }
+            }
+        },
+        "/api/user/profile-information": {
+            "put": {
+                "summary": "Endpoint para actualizar los datos del usuario autenticado.",
+                "description": "Endpoint para actualizar los datos del usuario autenticado.",
+                "operationId": "66ac266506c04157f941941513599add",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "Nombre de usuario",
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "description": "Dirección de correo",
+                                        "type": "string"
+                                    },
+                                    "photo": {
+                                        "description": "Foto de perfil",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "name": "Juan",
+                                    "email": "juan@gmail.com",
+                                    "photo": "Alguna foto de perfil menor de 2048 bytes..."
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    }
+                }
+            }
+        },
+        "/api/user/profile-photo": {
+            "delete": {
+                "summary": "Elimina la foto de perfil.",
+                "description": "Elimina la foto de perfil del usaurio autenticado.",
+                "operationId": "130ecc9822710f47efafdd612ffa2601",
+                "responses": {
+                    "200": {
+                        "description": "Retorna la url predeterminada de la foto de perfil."
+                    }
+                }
+            }
+        },
+        "/api/profits": {
+            "get": {
+                "summary": "Obtiene las ganancias totales",
+                "description": "Obtiene las ganancias totales. Se requieres permisos de administrador o editor.",
+                "operationId": "6282924bc6dd4f5ac94da0d5f1a08e6e",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "profits": {
+                                            "description": "Ganancias totales",
+                                            "type": "number"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "profits": 435
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/buy": {
+            "post": {
+                "summary": "Endpoint para vender un producto",
+                "description": "Endpoint para vender un producto",
+                "operationId": "5352d66813b5b5ec8ea15569b39885d3",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "product_id": {
+                                        "description": "Id del producto a vender",
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "product_id": 1
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    }
+                }
+            }
+        },
+        "/api/sales": {
+            "get": {
+                "summary": "Endpoint para obtener todos los productos vendidos",
+                "description": "Endpoint para obtener todos los productos vendidos",
+                "operationId": "3ebc144edfdc34866dfec36371705be2",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#components/schemas/SoldProduct"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/register": {
+            "post": {
+                "summary": "Registra un nuevo usuario",
+                "description": "Registra un nuevo usuario en la base de datos. Las credenciales necesarias son nombre, email y\n     *                  contraseña",
+                "operationId": "88e7cfd8b6266341857bffc4b6833705",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    },
+                                    "password_confirmation": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "name": "Juan",
+                                    "email": "juan@mail.com",
+                                    "password": "abcd1234",
+                                    "password_confirmation": "abcd1234"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "oneOf": [
+                                        {
+                                            "$ref": "#components/schemas/RegisterResponse"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/reviews/{product}": {
+            "get": {
+                "summary": "Obtiene las reseñas de un producto",
+                "description": "Obtiene las reseñas de un producto.",
+                "operationId": "663189e0421b3556e88a12c4308f4c4c",
+                "parameters": [
+                    {
+                        "name": "product",
+                        "in": "path",
+                        "description": "Id del producto",
+                        "required": true,
+                        "allowEmptyValue": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    }
+                }
+            }
+        },
+        "/api/reviews": {
+            "post": {
+                "summary": "Guarda una nueva reseña",
+                "description": "Guarda una nueva reseña de un producto.",
+                "operationId": "154c71f5f72b459d998f5ea451bd4c96",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#components/schemas/Review"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#components/schemas/Review"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/reviews/{review}": {
+            "put": {
+                "summary": "Actualiza una reseña",
+                "description": "Actualiza una reseña del usaurio autenticado.",
+                "operationId": "ac24d04d9d6d1e7753ce24c811a3cbb0",
+                "parameters": [
+                    {
+                        "name": "review",
+                        "in": "path",
+                        "description": "Id de la reseña",
+                        "required": true,
+                        "allowEmptyValue": false
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#components/schemas/Review"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Elimina un reseña",
+                "description": "elimina una reseña del usuario autenticado",
+                "operationId": "7d89060a6133216c7215b8624ce930fe",
+                "parameters": [
+                    {
+                        "name": "review",
+                        "in": "path",
+                        "description": "Id de la reseña",
+                        "required": true,
+                        "allowEmptyValue": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    }
+                }
+            }
+        },
+        "/api/products/search": {
+            "get": {
+                "summary": "Busca los productos por las características",
+                "description": "Realiza una búsqueda de los productos por las características dadas.",
+                "operationId": "8071976f63ed39270388f29890d79ac1",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Nombre del producto a buscar"
+                    },
+                    {
+                        "name": "category",
+                        "in": "query",
+                        "description": "Categoría del producto"
+                    },
+                    {
+                        "name": "tags",
+                        "in": "query",
+                        "description": "Etiquetas que pueda tener el producto"
+                    },
+                    {
+                        "name": "price",
+                        "in": "query",
+                        "description": "Precio"
+                    },
+                    {
+                        "name": "stock",
+                        "in": "query",
+                        "description": "Existencias"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#components/schemas/ProductPaginatorSchema"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/products/search-count": {
+            "get": {
+                "summary": "Busca los productos por las características",
+                "description": "Realiza una búsqueda de los productos por las características dadas.",
+                "operationId": "6e324ec39e03bccc57ce1d4792e8c848",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Nombre del producto a buscar"
+                    },
+                    {
+                        "name": "category",
+                        "in": "query",
+                        "description": "Categoría del producto"
+                    },
+                    {
+                        "name": "tags",
+                        "in": "query",
+                        "description": "Etiquetas que pueda tener el producto"
+                    },
+                    {
+                        "name": "price",
+                        "in": "query",
+                        "description": "Precio"
+                    },
+                    {
+                        "name": "stock",
+                        "in": "query",
+                        "description": "Existencias"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Retorna la cantidad de productos encontrados"
+                    }
+                }
+            }
+        },
+        "/api/users": {
+            "get": {
+                "summary": "Obtiene todos los usuarios.",
+                "description": "Obtiene todos los usuarios en la base de datos. Este endpoint requiere permisos\n     *                  de administrador.",
+                "operationId": "c457726701591d1183b53aa71fc13441",
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    }
+                }
+            }
+        },
+        "/api/user": {
+            "get": {
+                "summary": "Obtiene el usuario autenticado.",
+                "description": "Obtiene el usuario autenticado.",
+                "operationId": "2130b7cce3aebae5b2f0aecd8f3cf0d3",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "oneOf": [
+                                        {
+                                            "$ref": "#components/schemas/User"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/users/{user}": {
+            "get": {
+                "summary": "Obtiene un usuario por el id.",
+                "description": "Obtiene un usuario por el id. Este enpoint requiere permisos de administrador",
+                "operationId": "d3a14968f8b7a072620c75c7c78ed6f8",
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "path",
+                        "description": "Id del usuario",
+                        "required": true,
+                        "allowEmptyValue": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "oneOf": [
+                                        {
+                                            "$ref": "#components/schemas/User"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Elimina un usuario de la base de datos.",
+                "description": "Elimina un usuario de la base de datos. Este endpoint requiere permisos de administrador.",
+                "operationId": "e0f9a385a1d6788b99e519bd98cf7239",
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "path",
+                        "description": "Id del usaurio",
+                        "required": true,
+                        "allowEmptyValue": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    }
+                }
+            }
+        },
+        "/api/users/{user}/assign-role": {
+            "patch": {
+                "summary": "Asigna un rol dado a un usuario",
+                "description": "Asigna un rol dado a un usuario. Este endpoint requiere permisos de administrador.",
+                "operationId": "5ad0b414220edbc1b6b199835bba2bd5",
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "path",
+                        "description": "Id del usaurio",
+                        "required": true,
+                        "allowEmptyValue": false
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "role": {
+                                        "description": "Rol a asignar",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "role": "edit"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    }
+                }
+            }
+        },
+        "/api/users/{user}/remove-role": {
+            "patch": {
+                "summary": "Elimina un rol a un usaurio.",
+                "description": "elimina un rol a un usuario. Este endpoint requiere permisos de administrador. No se puede\n     *                  eliminar un rol al usaurio autenticado.",
+                "operationId": "f870b1d58f1986675b3f3ad3d7f109ad",
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "path",
+                        "description": "Id del usaurio",
+                        "required": true,
+                        "allowEmptyValue": false
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "role": {
+                                        "description": "Rol a asignar",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "role": "edit"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "LoginResponse": {
+                "properties": {
+                    "token": {
+                        "type": "string"
+                    },
+                    "expiration_in_minutes": {
+                        "type": "integer"
+                    }
+                },
+                "type": "object",
+                "example": {
+                    "token": "3|fswsfwhoicushwuihiwuhfd38fsuihf",
+                    "expiration_in_minutes": 30
+                }
+            },
+            "RegisterResponse": {
+                "properties": {
+                    "token": {
+                        "type": "string"
+                    },
+                    "expiration_in_minutes": {
+                        "type": "integer"
+                    }
+                },
+                "type": "object",
+                "example": {
+                    "token": "3|fswsfwhoicushwuihiwuhfd38fsuihf",
+                    "expiration_in_minutes": 30
+                }
+            },
+            "Category": {
+                "properties": {
+                    "name": {
+                        "description": "Nombre de la categoría",
+                        "type": "string"
+                    }
+                },
+                "type": "object",
+                "example": {
+                    "name": "For Boys"
+                }
+            },
+            "Product": {
+                "properties": {
+                    "id": {
+                        "description": "Identificador único",
+                        "type": "integer"
+                    },
+                    "name": {
+                        "description": "Nombre",
+                        "type": "string"
+                    },
+                    "price": {
+                        "description": "Precio",
+                        "type": "number"
+                    },
+                    "old_price": {
+                        "description": "Precio antiguo (Opcional)",
+                        "type": "number"
+                    },
+                    "stock": {
+                        "description": "Existencias",
+                        "type": "integer"
+                    },
+                    "tags": {
+                        "description": "Etiquetas",
+                        "type": "array",
+                        "items": {
+                            "title": "Blouse"
+                        }
+                    },
+                    "description": {
+                        "description": "Descripción",
+                        "type": "string"
+                    },
+                    "additional_information": {
+                        "description": "Información adicional",
+                        "type": "array",
+                        "items": {
+                            "title": "color"
+                        }
+                    },
+                    "assessment": {
+                        "description": "Valoración",
+                        "type": "number"
+                    },
+                    "category_name": {
+                        "description": "Nombre de la categoría a la que pertenece el producto",
+                        "type": "string"
+                    }
+                },
+                "type": "object",
+                "example": {
+                    "id": 1,
+                    "name": "Blue Blouse",
+                    "price": 22,
+                    "old_price": null,
+                    "stock": 9,
+                    "tags": [
+                        "Blouse",
+                        "Girls"
+                    ],
+                    "description": "Alguna descripción...",
+                    "additional_information": {
+                        "color": "blue",
+                        "material": "cotton",
+                        "age": "6 years"
+                    },
+                    "assessment": 4.5,
+                    "category_name": "For Girls"
+                }
+            },
+            "ProductPaginatorSchema": {
+                "properties": {
+                    "current_page": {
+                        "description": "Página actual",
+                        "type": "integer"
+                    },
+                    "data": {
+                        "description": "Datos",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#components/schemas/Product"
+                        }
+                    },
+                    "first_page_url": {
+                        "description": "Url de la primera página",
+                        "type": "string"
+                    },
+                    "last_page": {
+                        "description": "Última página",
+                        "type": "integer"
+                    },
+                    "last_page_url": {
+                        "description": "Url de la última página",
+                        "type": "string"
+                    },
+                    "links": {
+                        "description": "Enlaces",
+                        "type": "object"
+                    },
+                    "next_page_url": {
+                        "description": "Url de la próxima página",
+                        "type": "string"
+                    },
+                    "per_page": {
+                        "description": "Elementos por página",
+                        "type": "integer"
+                    },
+                    "prev_page_url": {
+                        "description": "Url de la página anterior",
+                        "type": "string"
+                    },
+                    "from": {
+                        "description": "Número inicial de la cantidad de elementos mostrados",
+                        "type": "integer"
+                    },
+                    "to": {
+                        "description": "Número final de la cantidad de elementos mostrados",
+                        "type": "integer"
+                    },
+                    "total": {
+                        "description": "Cantidad total de elementos",
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "Review": {
+                "properties": {
+                    "assessment": {
+                        "description": "Valoración",
+                        "type": "integer"
+                    },
+                    "comment": {
+                        "description": "Comentario",
+                        "type": "string"
+                    },
+                    "user_id": {
+                        "description": "Is del usuario al que pertenece la reseña",
+                        "type": "integer"
+                    },
+                    "product_id": {
+                        "description": "Id del producto al que pertenece la reseña",
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "SoldProduct": {
+                "properties": {
+                    "sake_price": {
+                        "description": "Precio de venta",
+                        "type": "number"
+                    },
+                    "product_id": {
+                        "description": "Id del producto vendido",
+                        "type": "integer"
+                    },
+                    "product": {
+                        "description": "Producto relacionado"
+                    }
+                },
+                "type": "object"
+            },
+            "User": {
+                "properties": {
+                    "id": {
+                        "description": "Identificador único",
+                        "type": "integer"
+                    },
+                    "name": {
+                        "description": "Nombre de usuario",
+                        "type": "string"
+                    },
+                    "email": {
+                        "description": "Dirección de correo",
+                        "type": "string"
+                    },
+                    "profile_photo_url": {
+                        "description": "Url de la foto de perfil",
+                        "type": "string"
+                    },
+                    "role_names": {
+                        "description": "Los roles del usuario",
+                        "type": "array",
+                        "items": [
+                            {
+                                "title": "admin"
+                            },
+                            {
+                                "title": "edit"
+                            }
+                        ]
+                    }
+                },
+                "type": "object",
+                "example": {
+                    "id": 1,
+                    "name": "Juan",
+                    "email": "juan@mail.com",
+                    "profile_photo_url": "https://ui-avatars.com/api/?name=J+U&color=7F9CF5&background=EBF4FF",
+                    "role_names": [
+                        "edit"
+                    ]
+                }
+            }
+        }
+    }
+}
