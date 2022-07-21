@@ -28,6 +28,7 @@ se encuentran en el script *routes/api.php*. Todas las rutas deben tener el pref
 Abra una consola de cmd en la carpeta del proyecto y ejecute los siguientes comandos.
 
  - `composer install` para instalar las dependencias del proyecto.
+ - `php artisan storage:link` para crear el enlace al almacenamiento.
  - `php artisan serve` para ejecutar el servidor local de desarrollo.
 
 Puede limpiar y volver a sembrar la base de datos con el siguiente comando
